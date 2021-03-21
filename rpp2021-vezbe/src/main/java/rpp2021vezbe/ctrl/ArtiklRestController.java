@@ -64,6 +64,7 @@ public class ArtiklRestController {
 	 *  i taj artikal će potom biti prikazan u browseru u JSON formatu.
 	 */
 
+	@GetMapping("artikl/{id}")
 	public ResponseEntity<Artikl> getOne(@PathVariable("id") Integer id) {
 
 		if (artiklRepository.findById(id).isPresent()) {
