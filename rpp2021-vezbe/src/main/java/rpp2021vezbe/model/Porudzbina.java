@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,8 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 /**
@@ -24,6 +26,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name="Porudzbina.findAll", query="SELECT p FROM Porudzbina p")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Porudzbina implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -32,10 +35,14 @@ public class Porudzbina implements Serializable {
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="PORUDZBINA_ID_GENERATOR")
 	private Integer id;
 
-	@Temporal(TemporalType.DATE)
+	/*
+	 * @Temporal je potrebno samo za verzije jave pre 1.8 (Java 8)
+	 */
+
+	//@Temporal(TemporalType.DATE)
 	private Date datum;
 
-	@Temporal(TemporalType.DATE)
+	//@Temporal(TemporalType.DATE)
 	private Date isporuceno;
 
 	private BigDecimal iznos;
@@ -48,7 +55,8 @@ public class Porudzbina implements Serializable {
 	private Dobavljac dobavljac;
 
 	//bi-directional many-to-one association to StavkaPorudzbine
-	@OneToMany(mappedBy="porudzbina")
+	@OneToMany(mappedBy="porudzbina", cascade = {CascadeType.ALL})
+	@JsonIgnore
 	private List<StavkaPorudzbine> stavkaPorudzbines;
 
 	public Porudzbina() {
