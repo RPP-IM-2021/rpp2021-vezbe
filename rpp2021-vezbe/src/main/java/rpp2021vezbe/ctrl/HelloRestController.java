@@ -1,5 +1,6 @@
 package rpp2021vezbe.ctrl;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Više informacija HTTP porukama možete pronaći na linku
  * https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages
  */
-
+@CrossOrigin
 @RestController
 public class HelloRestController {
 
